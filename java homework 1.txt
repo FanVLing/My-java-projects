@@ -1,0 +1,67 @@
+//java homework 1
+
+package MyClass;
+
+import java.util.*;
+import net.sourceforge.pinyin4j.PinyinHelper;  
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;  
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;  
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;  
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;  
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;  
+
+public class PinyinConverter {
+	public static String convertoPinYin(String chstr) {  
+        char[] t1 = null;  
+        t1 = chstr.toCharArray();  
+        String[] t2 = new String[1]; 
+        
+        HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();  
+          
+        t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);  
+        t3.setToneType(HanyuPinyinToneType.WITHOUT_TONE);  
+        t3.setVCharType(HanyuPinyinVCharType.WITH_V);  
+        String t4 = "";  
+        int t0 = t1.length;  
+        try {  
+            for (int i = 0; i < t0; i++) { 
+                if (java.lang.Character.toString(t1[i]).matches("[\\u4E00-\\u9FA5]+")) 
+                {  
+                    t2 = PinyinHelper.toHanyuPinyinStringArray(t1[i], t3); 
+                    t4 += t2[0];  
+                } else  
+                    t4 += java.lang.Character.toString(t1[i]);  
+            }  
+            return t4;  
+        } 
+        catch (BadHanyuPinyinOutputFormatCombination e1)
+        {  
+            e1.printStackTrace();  
+        }  
+        return t4;  
+    } 
+    public static void main(String[] args)
+    {  
+    	 String[] arr = {"毛泽东", "习近平", "邓小平", "胡锦涛", "李克强", "江泽民"}; 
+    	 System.out.println("输出汉字数组：");
+    	 for(int i=0;i<arr.length-1;i++)
+    	 {
+    		 System.out.println(arr[i]+" ");	
+    	 } 
+    	 
+    	 int j=0;
+    	 for(String a: arr)
+    	 {
+    		 
+    		 arr[j]=convertoPinYin(a);
+    		 j++;
+    	 }
+    	 
+    	 Arrays.sort(arr);
+    	 System.out.println("输出排序好的拼音数组：");
+    	 for(int k=0; k<arr.length-1;k++)
+    	 {
+    		 System.out.println(arr[k]);	
+    	 }
+    } 
+}
